@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace Cloud_Aissgnment_1.Models
 {
-    public class productTable : Controller
+    public class productTable 
     {
         //public static string con_string = "Server=tcp:clouddev-sql-server.database.windows.net,1433;Initial Catalog=CLDVDatabase;Persist Security Info=False;User ID=Byron;Password=RockeyM12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         public static string con_string = "Server=tcp:st10256074-sql-server.database.windows.net,1433;Initial Catalog=st10256074-sql-db;Persist Security Info=False;User ID=James;Password=qTSJh2lbCrIRs5cSDvW6jhFkyUtyTX64;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
@@ -12,29 +12,16 @@ namespace Cloud_Aissgnment_1.Models
 
         public string Name { get; set; }
 
-        public string Price { get; set; }
+        public float Price { get; set; }
 
         public string Category { get; set; }
 
-        public string Availability { get; set; }
+        public bool Availability { get; set; }
 
 
 
-        public int insert_product(productTable p)
+        public int insertProduct(productTable p)
         {
-            //declaring string with object name "sql" where we will write the insert statements
-            //string sql = @"insert into userTable([[userName], [userSurname], [userEmail]) values(" + m.Name + ", " + m.Surname + ", " + m.Email + ")";
-
-
-            //SqlCommand cmd = new SqlCommand(sql, con);
-
-
-            //return cmd.ExecuteNonQuery();
-
-
-            //same methods below, but as you can see.. much longer to complete
-
-
             try
             {
                 string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability) VALUES (@Name, @Price, @Category, @Availability)";
@@ -55,10 +42,35 @@ namespace Cloud_Aissgnment_1.Models
                 throw ex;
             }
 
-            //public IActionResult Index()
-            //{
-            //    return View();
-            //}
+        }
+
+        public static List<productTable> ReturnProducts()
+        {
+            string sql = "Select * from productTable;";
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            List<productTable> products = new List<productTable>();
+
+
+            con.Open();
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    float price = reader.GetFloat(1);
+                    string category = reader.GetString(2);
+                    bool availability = reader.GetBoolean(3);
+
+
+                    // ... (add more properties for all columns)
+
+                    products.Add(new productTable { Name = name, Availability = availability, Category = category, Price = price });
+                }
+            }
+
+            con.Close();
+            return (products);
         }
     }
 

@@ -1,4 +1,4 @@
-namespace Cloud_Aissgnment_1.Models
+﻿namespace Cloud_Aissgnment_1.Models
 {
     public class ErrorViewModel
     {

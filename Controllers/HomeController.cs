@@ -28,10 +28,22 @@ namespace Cloud_Aissgnment_1.Controllers
             return View();
         }
 
+
+
         public IActionResult MyWorkPage()
+        {
+            List<productTable> products = productTable.ReturnProducts();
+            ViewData["products"] = products;
+            //Duplicate
+            return View(products);
+        }
+
+        public IActionResult LoginSignup()
         {
             return View();
         }
+
+        public IActionResult ErrorViewModel() { return View(); }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

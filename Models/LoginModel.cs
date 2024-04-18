@@ -1,43 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
-
 namespace Cloud_Aissgnment_1.Models
 {
-    public class userTable
+    public class LoginModel
     {
-
         public static string con_string = "Server=tcp:st10256074-sql-server.database.windows.net,1433;Initial Catalog=st10256074-sql-db;Persist Security Info=False;User ID=James;Password=qTSJh2lbCrIRs5cSDvW6jhFkyUtyTX64;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         public static SqlConnection con = new SqlConnection(con_string);
 
-        // No ID as that auto-increments
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
 
-        public int insertUser(userTable m)
+        public int selectUser(LoginModel l)
         {
-            string sql = "INSERT INTO userTable (userName, userPassword, userEmail) VALUES (@username, @password, @email);";
+            Console.WriteLine(username);
+            int userId = -1;
+            string sql = "SELECT userID FROM userTable WHERE userName = @username and userPassword = @password;";
             SqlCommand cmd = new SqlCommand(sql, con);
 
             try
             {
-                cmd.Parameters.AddWithValue("@username", m.UserName);
-                cmd.Parameters.AddWithValue("@password", m.Password);
-                cmd.Parameters.AddWithValue("@email", m.Email); ;
+                cmd.Parameters.AddWithValue("@username", l.username);
+                cmd.Parameters.AddWithValue("@password", l.password);
                 con.Open();
-                int rowsAffected = cmd.ExecuteNonQuery();
+                object result = cmd.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    userId = Convert.ToInt32(result);
+                }
                 con.Close();
-                return rowsAffected;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
+            return userId;
+
         }
 
-       
     }
 }

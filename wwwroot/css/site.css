@@ -17,6 +17,11 @@ html {
   min-height: 100%;
 }
 
+h1 {
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
 body {
     margin-top: 60px;
     margin-bottom: 60px;
@@ -109,6 +114,15 @@ body {
     width: 100%;
 }
 
+.addProductButton{
+    background-color: #F77F00;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    padding:10px;
+    
+}
 
 li {
     font-weight: bold;
@@ -125,3 +139,41 @@ li {
     width:200px;
     height:auto;
 }
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Styling for each individual form */
+.form {
+    flex: 1;
+    text-align: center;
+}
+
+    .form h2 {
+        margin-bottom: 15px;
+    }
+
+    .form input[type="text"],
+    .form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .form input[type="submit"] {
+        background-color: #F77F00;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
