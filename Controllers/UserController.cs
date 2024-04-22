@@ -23,12 +23,14 @@ namespace Cloud_Aissgnment_1.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel l)
         {
-
+            
             int userId = lm.selectUser(l);
             if (userId != -1)
             {
                 // User found, proceed with login logic (e.g., set authentication cookie)
                 // For demonstration, redirecting to a dummy page
+                ViewData["userID"] = userId;
+                
                 return RedirectToAction("Index", "Home", new { userId = userId });
             }
             else

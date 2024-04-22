@@ -28,8 +28,15 @@ namespace Cloud_Aissgnment_1.Controllers
             return View();
         }
 
+        public IActionResult Cart()
+        {
+            return View();
+        }
 
-
+        public IActionResult Account()
+        {
+            return View();
+        }
         public IActionResult MyWorkPage()
         {
             List<productTable> products = productTable.ReturnProducts();

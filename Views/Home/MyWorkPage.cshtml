@@ -3,18 +3,20 @@
 *@
 @{
     ViewData["Title"] = "My Work";
-    var userID = ViewData["userID"];
+    int? userID = (int?) ViewData["userID"] ;
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
 }
 
 <div class="center-block">
     @*CHange to userID != -1*@
-    @if (true)
+    <h1>Products </h1>
+    @if (userID.HasValue && userID != -1)
     {
-        
-        <h1>Products </h1>
-        <form asp-controller="Product" asp-action="ProductAdd" method="post"><input class="addProductButton" type="submit" value="Add Product"></form>
+
     }
+    <form asp-controller="Product" asp-action="ProductAdd" method="post">
+        <input class="addProductButton" type="submit" value="Add Product">
+    </form>
 
     <div class="item-grid"></div>
 
@@ -40,9 +42,9 @@
         @foreach (var item in Model)
         {
             <div class="grid-item">
-                <p class="grid-item-text">item.name</p>
+                <p class="grid-item-text">@item.Name</p>
                 <img src=item.picture />
-                <p class="grid-item-text">item.price</p>
+                <p class="grid-item-text">R @item.Price</p>
             </div>
         }
 

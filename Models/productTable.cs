@@ -12,7 +12,7 @@ namespace Cloud_Aissgnment_1.Models
 
         public string Name { get; set; }
 
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         public string Category { get; set; }
 
@@ -27,9 +27,9 @@ namespace Cloud_Aissgnment_1.Models
                 string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability) VALUES (@Name, @Price, @Category, @Availability)";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@Name", p.Name);
-                cmd.Parameters.AddWithValue("@Price", p.Price);
+                cmd.Parameters.AddWithValue("@Price", (double) p.Price);
                 cmd.Parameters.AddWithValue("@Category", p.Category);
-                cmd.Parameters.AddWithValue("@Availability", p.Availability);
+                cmd.Parameters.AddWithValue("@Availability",p.Availability);
                 con.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
                 con.Close();
@@ -57,10 +57,10 @@ namespace Cloud_Aissgnment_1.Models
             {
                 while (reader.Read())
                 {
-                    string name = reader.GetString(0);
-                    float price = reader.GetFloat(1);
-                    string category = reader.GetString(2);
-                    bool availability = reader.GetBoolean(3);
+                    string name = reader.GetString(1);
+                    double price = reader.GetDouble(2);
+                    string category = reader.GetString(3);
+                    bool availability = reader.GetBoolean(4);
 
 
                     // ... (add more properties for all columns)
