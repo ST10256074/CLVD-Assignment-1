@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
+    int productID = -1;
+    
+    if (TempData["productID"]!=null)
+    {
+        productID = int.Parse(@TempData["productID"].ToString());
+
+    }
+
+    
+
+    var userID = @TempData["userID"];
+}
+
+<h2>Ordered Product</h2>
+
+@foreach (var item in products)
+{
+    if (item.ID == productID)
+    {
+        <div class="grid-item">
+            <p class="grid-item-text">@item.Name</p>
+            <img src=item.picture />
+            <p class="grid-item-text">R @item.Price</p>
+        </div>
+        <form class="form" asp-controller="Product" asp-action="Buy" method="post">
+            @if (userID != null)
+            {
+                <input type="hidden" name="userID" value="@userID" />
+                <input type="hidden" name="productID" value="@productID" />
+                <input type="submit" value="Buy">
+            }
+        </form>
+    }
 }

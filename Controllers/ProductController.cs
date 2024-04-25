@@ -1,5 +1,7 @@
 ﻿using Cloud_Aissgnment_1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Extensions.Hosting;
 
 namespace Cloud_Aissgnment_1.Controllers
 {
@@ -16,12 +18,27 @@ namespace Cloud_Aissgnment_1.Controllers
         {
             var result = prdtbl.insertProduct(p);
             return RedirectToAction("MyWorkPage", "Home");
-
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public ActionResult Cart(string userID, string productID)
+        {
+            TempData["productID"] = productID.ToString();
+            TempData["userID"] = userID.ToString();
+            return RedirectToAction("Cart", "Home", productID);
+        }
+
+        [HttpPost]
+        public ActionResult Buy(string userID,string productID)
+        {
+            prdtbl.buyProduct(userID, productID);
+            return RedirectToAction("MyWorkPage", "Home");
         }
     }
 }

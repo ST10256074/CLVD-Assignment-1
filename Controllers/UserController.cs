@@ -30,7 +30,7 @@ namespace Cloud_Aissgnment_1.Controllers
                 // User found, proceed with login logic (e.g., set authentication cookie)
                 // For demonstration, redirecting to a dummy page
                 ViewData["userID"] = userId;
-                
+                TempData["userID"] = userId;
                 return RedirectToAction("Index", "Home", new { userId = userId });
             }
             else
@@ -40,18 +40,22 @@ namespace Cloud_Aissgnment_1.Controllers
             }
         }
 
+
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
 
-        //[HttpGet]
-        //public ActionResult ContactUs()
-        //{
-        //    //Connected to ContactUs Page 
-        //    return View(usrtbl);
-        //}
+        [HttpGet]
+        public Dictionary<string,string> AccountDetails()
+        {
+            Dictionary<string, string> account = new Dictionary<string, string>();
+            account.Add("name", usrtbl.UserName);
+            account.Add("password", usrtbl.Password);
+            account.Add("email", usrtbl.Email);
+            return account;
+        }
 
 
         public IActionResult Index()

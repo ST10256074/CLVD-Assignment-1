@@ -1,22 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* @Model int *@
 @{
-    ViewData["Title"] = "My Work";
-    int? userID = (int?) ViewData["userID"] ;
+    ViewData["Title"] = "Products";
+    var userID = -1;
+    if (TempData["userID"] != null)
+    {
+        userID = int.Parse(TempData["userID"].ToString());
+    } else
+    {
+        userID = -1;
+    }
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
 }
 
 <div class="center-block">
-    @*CHange to userID != -1*@
     <h1>Products </h1>
-    @if (userID.HasValue && userID != -1)
+    @if (userID !=-1)
     {
+        <form asp-controller="Product" asp-action="ProductAdd" method="post">
+            <input class="addProductButton" type="submit" value="Add Product">
+        </form>
 
     }
-    <form asp-controller="Product" asp-action="ProductAdd" method="post">
-        <input class="addProductButton" type="submit" value="Add Product">
-    </form>
+
 
     <div class="item-grid"></div>
 
@@ -39,20 +44,18 @@
             <img src="~/img/beaded-decorations.jpeg" alt="Beaded Decorations" class="center img-block" />
             <p class="grid-item-text">R250</p>
         </div>
-        @foreach (var item in Model)
+        @foreach (var item in products)
         {
             <div class="grid-item">
                 <p class="grid-item-text">@item.Name</p>
                 <img src=item.picture />
                 <p class="grid-item-text">R @item.Price</p>
+                <form asp-controller="Product" asp-action="Cart" method="post">
+                    <input type="hidden" name="userID" value="@userID" />
+                    <input type="hidden" name="productID" value="@item.ID" />
+                    <input type="submit" value="Buy" />
+                </form>
             </div>
         }
-
-@*         <div class="grid-item">4</div>
-        <div class="grid-item">5</div>
-        <div class="grid-item">6</div>
-        <div class="grid-item">7</div>
-        <div class="grid-item">8</div>
-        <div class="grid-item">9</div> *@
     </div>
 </div>

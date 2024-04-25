@@ -30,11 +30,20 @@ namespace Cloud_Aissgnment_1.Controllers
 
         public IActionResult Cart()
         {
+            List<productTable> products = productTable.ReturnProducts();
+            ViewData["products"] = products;
             return View();
         }
 
         public IActionResult Account()
         {
+            int userID = -1;
+            if (null !=  TempData["userID"])
+            {
+                userID = int.Parse(TempData["userID"].ToString());
+                
+            }
+            
             return View();
         }
         public IActionResult MyWorkPage()
@@ -42,7 +51,7 @@ namespace Cloud_Aissgnment_1.Controllers
             List<productTable> products = productTable.ReturnProducts();
             ViewData["products"] = products;
             //Duplicate
-            return View(products);
+            return View();
         }
 
         public IActionResult LoginSignup()

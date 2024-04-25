@@ -2,4 +2,21 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var userID = -1;
+    if (TempData["userID"] != null)
+    {
+        userID = int.Parse(TempData["userID"].ToString());
+    }
+    else
+    {
+        userID = -1;
+    }
 }
+
+<div class="account-details">
+    <h4>Account Details</h4>
+    <p><strong>Username:</strong> {{ username }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Name:</strong> {{ name }}</p>
+</div>
+
