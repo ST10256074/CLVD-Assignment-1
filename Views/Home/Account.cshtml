@@ -1,22 +1,60 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit (link unavailable)
 *@
 @{
     var userID = -1;
+    var username = "";
+    var email = "";
+    var password = "";
+
     if (TempData["userID"] != null)
     {
         userID = int.Parse(TempData["userID"].ToString());
+        username = TempData["username"].ToString();
+        email = TempData["email"].ToString();
+        password = TempData["password"].ToString();
     }
     else
     {
         userID = -1;
     }
+
+    // var orders = null;
+    // var productsBought = null;
 }
 
 <div class="account-details">
     <h4>Account Details</h4>
-    <p><strong>Username:</strong> {{ username }}</p>
-    <p><strong>Email:</strong> {{ email }}</p>
-    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Username:</strong> @username</p>
+    <p><strong>Email:</strong> @email</p>
+    <strong>Password:</strong><input type="password" value="@password">
 </div>
+<h2>Previous Orders</h2>
+@* @foreach (var item in orders)
+{
+    <div class="grid-item">
+        <p class="grid-item-text">@item.Name</p>
+        <img src=item.picture />
+        <p class="grid-item-text">R @item.Price</p>
+        <form asp-controller="Product" asp-action="Cart" method="post">
+            <input type="hidden" name="userID" value="@userID" />
+            <input type="hidden" name="productID" value="@item.ID" />
+            <input type="submit" value="Buy" />
+        </form>
+    </div>
+}
+<h2>Products Bought</h2>
+@foreach (var item in productsBought)
+{
+    <div class="grid-item">
+        <p class="grid-item-text">@item.Name</p>
+        <img src=item.picture />
+        <p class="grid-item-text">R @item.Price</p>
+        <form asp-controller="Product" asp-action="Cart" method="post">
+            <input type="hidden" name="userID" value="@userID" />
+            <input type="hidden" name="productID" value="@item.ID" />
+            <input type="submit" value="Buy" />
+        </form>
+    </div>
 
+*@

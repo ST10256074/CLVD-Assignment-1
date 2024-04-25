@@ -1,11 +1,15 @@
 ﻿@* @Model int *@
 @{
+}
+@{
     ViewData["Title"] = "Products";
     var userID = -1;
     if (TempData["userID"] != null)
     {
         userID = int.Parse(TempData["userID"].ToString());
-    } else
+        TempData["userID"] = userID;
+    }
+    else
     {
         userID = -1;
     }
@@ -14,7 +18,7 @@
 
 <div class="center-block">
     <h1>Products </h1>
-    @if (userID !=-1)
+    @if (userID != -1)
     {
         <form asp-controller="Product" asp-action="ProductAdd" method="post">
             <input class="addProductButton" type="submit" value="Add Product">

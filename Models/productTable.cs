@@ -24,12 +24,13 @@ namespace Cloud_Aissgnment_1.Models
         {
             try
             {
-                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability) VALUES (@Name, @Price, @Category, @Availability)";
+                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability, productOwnerID) VALUES (@Name, @Price, @Category, @Availability, @ID)";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@Name", p.Name);
                 cmd.Parameters.AddWithValue("@Price", (double)p.Price);
                 cmd.Parameters.AddWithValue("@Category", p.Category);
                 cmd.Parameters.AddWithValue("@Availability", p.Availability);
+                cmd.Parameters.AddWithValue("@ID", p.ID);
                 con.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
                 con.Close();

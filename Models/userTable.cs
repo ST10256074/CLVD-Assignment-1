@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using System.Data.SqlClient;
 
 
@@ -38,6 +39,38 @@ namespace Cloud_Aissgnment_1.Models
             }
         }
 
-       
+        public List<string> userDetails(int userID)
+        {
+            List<string> details = new List<string> { };
+            string sql = "SELECT userName,userEmail,userPassword FROM userTable WHERE userID = @userID;";
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+            try
+            {
+                cmd.Parameters.AddWithValue("@userID", userID);
+                con.Open();
+                int rowsAffected = cmd.ExecuteNonQuery();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        details.Add(reader.GetString(0));
+                        details.Add(reader.GetString(1));
+                        details.Add(reader.GetString(2));
+                    }
+                }
+                con.Close();
+                return details;
+            }
+
+
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
     }
 }

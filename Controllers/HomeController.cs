@@ -37,13 +37,16 @@ namespace Cloud_Aissgnment_1.Controllers
 
         public IActionResult Account()
         {
+            userTable usrbl = new userTable();
             int userID = -1;
-            if (null !=  TempData["userID"])
+            if (null != TempData["userID"])
             {
                 userID = int.Parse(TempData["userID"].ToString());
-                
             }
-            
+            List<productTable> products = productTable.ReturnProducts();
+            ViewData["products"] = products;
+
+
             return View();
         }
         public IActionResult MyWorkPage()

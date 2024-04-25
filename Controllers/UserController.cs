@@ -23,13 +23,12 @@ namespace Cloud_Aissgnment_1.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel l)
         {
-            
+
             int userId = lm.selectUser(l);
             if (userId != -1)
             {
                 // User found, proceed with login logic (e.g., set authentication cookie)
                 // For demonstration, redirecting to a dummy page
-                ViewData["userID"] = userId;
                 TempData["userID"] = userId;
                 return RedirectToAction("Index", "Home", new { userId = userId });
             }
@@ -47,14 +46,17 @@ namespace Cloud_Aissgnment_1.Controllers
             return View();
         }
 
-        [HttpGet]
-        public Dictionary<string,string> AccountDetails()
+        public ActionResult Account()
         {
-            Dictionary<string, string> account = new Dictionary<string, string>();
-            account.Add("name", usrtbl.UserName);
-            account.Add("password", usrtbl.Password);
-            account.Add("email", usrtbl.Email);
-            return account;
+            if (TempData["userID"] != null) {
+
+                List<string> details =usrtbl.userDetails( int.Parse( TempData["userID"].ToString()));
+                TempData["username"] = details[0];
+                TempData["email"] = details[1];
+                TempData["password"] = details[2];
+            }
+            return RedirectToAction("Account", "Home");
+
         }
 
 
