@@ -6,6 +6,8 @@
     var username = "";
     var email = "";
     var password = "";
+    var orders = new List<Cloud_Aissgnment_1.Models.productTable> { };
+    var products = new List<Cloud_Aissgnment_1.Models.productTable> { };
 
     if (TempData["userID"] != null)
     {
@@ -13,6 +15,9 @@
         username = TempData["username"].ToString();
         email = TempData["email"].ToString();
         password = TempData["password"].ToString();
+        orders = TempData["orders"] as List<Cloud_Aissgnment_1.Models.productTable>;
+        products = TempData["products"] as List<Cloud_Aissgnment_1.Models.productTable>;
+        TempData["userID"] = userID;
     }
     else
     {
@@ -24,37 +29,29 @@
 }
 
 <div class="account-details">
-    <h4>Account Details</h4>
+    <h3>Account</h3>
     <p><strong>Username:</strong> @username</p>
     <p><strong>Email:</strong> @email</p>
     <strong>Password:</strong><input type="password" value="@password">
 </div>
-<h2>Previous Orders</h2>
-@* @foreach (var item in orders)
+<h4>Client Orders</h4>
+@foreach (var p in products)
 {
     <div class="grid-item">
-        <p class="grid-item-text">@item.Name</p>
+        <p class="grid-item-text">@p.Name</p>
         <img src=item.picture />
-        <p class="grid-item-text">R @item.Price</p>
-        <form asp-controller="Product" asp-action="Cart" method="post">
-            <input type="hidden" name="userID" value="@userID" />
-            <input type="hidden" name="productID" value="@item.ID" />
-            <input type="submit" value="Buy" />
-        </form>
+        <p class="grid-item-text">R @p.Price</p>
     </div>
 }
-<h2>Products Bought</h2>
-@foreach (var item in productsBought)
+<h4>Products Bought</h4>
+
+@foreach (var o in orders)
 {
     <div class="grid-item">
-        <p class="grid-item-text">@item.Name</p>
+        <p class="grid-item-text">@o.Name</p>
         <img src=item.picture />
-        <p class="grid-item-text">R @item.Price</p>
-        <form asp-controller="Product" asp-action="Cart" method="post">
-            <input type="hidden" name="userID" value="@userID" />
-            <input type="hidden" name="productID" value="@item.ID" />
-            <input type="submit" value="Buy" />
-        </form>
+        <p class="grid-item-text">R @o.Price</p>
     </div>
+}
 
-*@
+

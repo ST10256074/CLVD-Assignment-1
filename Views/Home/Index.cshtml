@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    // Fixes Bug where TempData survives restart and browser closure 
+    // Issue : #30645
+    TempData["userID"] = null;
 }
 
-@* <header class="header">
-    <h1 >yo</h1>
-</header> *@
 
 @*
     https://www.pexels.com/photo/black-metal-scissors-803929/

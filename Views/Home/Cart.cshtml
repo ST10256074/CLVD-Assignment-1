@@ -1,16 +1,25 @@
 ﻿@{
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
     int productID = -1;
-    
+    DateTime d = DateTime.Today;
+
     if (TempData["productID"]!=null)
     {
         productID = int.Parse(@TempData["productID"].ToString());
-
     }
 
     
 
-    var userID = @TempData["userID"];
+    var userID = -1;
+    if (TempData["userID"] != null)
+    {
+        userID = int.Parse(TempData["userID"].ToString());
+        TempData["userID"] = userID;
+    }
+    else
+    {
+        userID = -1;
+    }
 }
 
 <h2>Ordered Product</h2>
@@ -24,11 +33,12 @@
             <img src=item.picture />
             <p class="grid-item-text">R @item.Price</p>
         </div>
-        <form class="form" asp-controller="Product" asp-action="Buy" method="post">
+        <form class="form" asp-controller="Transaction" asp-action="Buy" method="post">
             @if (userID != null)
             {
                 <input type="hidden" name="userID" value="@userID" />
                 <input type="hidden" name="productID" value="@productID" />
+                <input type="hidden" name="date" value="@d" />
                 <input type="submit" value="Buy">
             }
         </form>

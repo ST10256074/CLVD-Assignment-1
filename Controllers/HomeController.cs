@@ -37,15 +37,26 @@ namespace Cloud_Aissgnment_1.Controllers
 
         public IActionResult Account()
         {
-            userTable usrbl = new userTable();
-            int userID = -1;
             if (null != TempData["userID"])
             {
-                userID = int.Parse(TempData["userID"].ToString());
-            }
-            List<productTable> products = productTable.ReturnProducts();
-            ViewData["products"] = products;
 
+                int userID = int.Parse(TempData["userID"].ToString());
+                TempData["userID"] = userID;
+                userTable usrtbl = new userTable();
+                TransactionTable t = new TransactionTable();
+
+                List<string> details = usrtbl.userDetails(userID);
+
+                TempData["username"] = details[0];
+                TempData["email"] = details[1];
+                TempData["password"] = details[2];
+                TempData["userID"] = userID;
+
+                List<productTable> orders = t.getOrders(userID);
+                List<productTable> products = t.getOwnedOrders(userID);
+                TempData["orders"] = orders;
+                TempData["products"] = products;
+            }
 
             return View();
         }

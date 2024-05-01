@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
-using System.Reflection;
+﻿using System.Data.SqlClient;
 
 namespace Cloud_Aissgnment_1.Models
 {

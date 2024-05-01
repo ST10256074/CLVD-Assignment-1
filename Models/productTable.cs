@@ -18,13 +18,16 @@ namespace Cloud_Aissgnment_1.Models
 
         public bool Availability { get; set; }
 
+        public int OwnerID { get; set; }
+
 
 
         public int insertProduct(productTable p)
         {
             try
             {
-                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability, productOwnerID) VALUES (@Name, @Price, @Category, @Availability, @ID)";
+                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability, productOwnerID) " +
+                    "VALUES (@Name, @Price, @Category, @Availability, @ID)";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@Name", p.Name);
                 cmd.Parameters.AddWithValue("@Price", (double)p.Price);
@@ -63,11 +66,11 @@ namespace Cloud_Aissgnment_1.Models
                     double price = reader.GetDouble(2);
                     string category = reader.GetString(3);
                     bool availability = reader.GetBoolean(4);
-
+                    int owner = reader.GetInt32(5);
 
                     // ... (add more properties for all columns)
 
-                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price });
+                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price, OwnerID = owner });
                 }
             }
 
@@ -75,11 +78,7 @@ namespace Cloud_Aissgnment_1.Models
             return (products);
         }
 
-        public int buyProduct(string userID, string productID)
-        {
-            string sql = "INSERT INTO transcTable ";
-            return 0;
-        }
+
     }
 
 

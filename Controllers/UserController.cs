@@ -1,7 +1,6 @@
 ﻿
 using Cloud_Aissgnment_1.Models;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Cloud_Aissgnment_1.Controllers
@@ -27,15 +26,14 @@ namespace Cloud_Aissgnment_1.Controllers
             int userId = lm.selectUser(l);
             if (userId != -1)
             {
-                // User found, proceed with login logic (e.g., set authentication cookie)
-                // For demonstration, redirecting to a dummy page
+                // Redirect After User Found
                 TempData["userID"] = userId;
-                return RedirectToAction("Index", "Home", new { userId = userId });
+                return RedirectToAction("Account", "Home", new { userId = userId });
             }
             else
             {
-                // User not found, handle accordingly (e.g., show error message)
-                return Content("Zain Ul Hassan", "text / html");
+                // User not found
+                return Content("User Not Found", "text / html");
             }
         }
 
@@ -48,12 +46,9 @@ namespace Cloud_Aissgnment_1.Controllers
 
         public ActionResult Account()
         {
-            if (TempData["userID"] != null) {
+            if (TempData["userID"] != null)
+            {
 
-                List<string> details =usrtbl.userDetails( int.Parse( TempData["userID"].ToString()));
-                TempData["username"] = details[0];
-                TempData["email"] = details[1];
-                TempData["password"] = details[2];
             }
             return RedirectToAction("Account", "Home");
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 
 namespace Cloud_Aissgnment_1.Models
