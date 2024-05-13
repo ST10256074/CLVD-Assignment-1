@@ -1,16 +1,22 @@
 using Cloud_Aissgnment_1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace Cloud_Aissgnment_1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        // provate readonly IHttpContextAccessor _httpContextAccessor
+        // int? userID = _httpCOntextAccessor.HttpContext.Seesion.GetInt32("UserID");
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor; // Initialize IHttpContextAccessor
         }
 
         public IActionResult Index()
@@ -41,7 +47,9 @@ namespace Cloud_Aissgnment_1.Controllers
             {
 
                 int userID = int.Parse(TempData["userID"].ToString());
-                TempData["userID"] = userID;
+                TempData["UserID"] = _httpContextAccessor.HttpContext.Session.GetInt32("UserID");
+                //TempData["userID"] = userID;
+
                 userTable usrtbl = new userTable();
                 TransactionTable t = new TransactionTable();
 

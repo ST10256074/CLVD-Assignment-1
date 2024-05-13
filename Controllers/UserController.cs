@@ -23,12 +23,13 @@ namespace Cloud_Aissgnment_1.Controllers
         public ActionResult Login(LoginModel l)
         {
 
-            int userId = lm.selectUser(l);
-            if (userId != -1)
+            int UserID = lm.selectUser(l);
+            if (UserID != -1)
             {
                 // Redirect After User Found
-                TempData["userID"] = userId;
-                return RedirectToAction("Account", "Home", new { userId = userId });
+                TempData["userID"] = UserID;
+                HttpContext.Session.SetInt32("UserID", UserID);
+                return RedirectToAction("Account", "Home");
             }
             else
             {
