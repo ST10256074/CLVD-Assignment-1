@@ -4,7 +4,11 @@
 @{
     ViewData["Title"] = "Products";
     var userID = -1;
-    userID = int.Parse( ViewData["userID"].ToString());
+    if (ViewData["userID"] !=null)
+    {
+        userID = int.Parse(ViewData["userID"].ToString());
+
+    }
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
 }
 
