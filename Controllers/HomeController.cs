@@ -43,11 +43,12 @@ namespace Cloud_Aissgnment_1.Controllers
 
         public IActionResult Account()
         {
-            if (null != TempData["userID"])
-            {
+            int? test_userID = _httpContextAccessor.HttpContext.Session.GetInt32("UserID");
 
-                int userID = int.Parse(TempData["userID"].ToString());
-                TempData["UserID"] = _httpContextAccessor.HttpContext.Session.GetInt32("UserID");
+            if (null != test_userID)
+            {
+                int userID = (int) test_userID;
+                
                 //TempData["userID"] = userID;
 
                 userTable usrtbl = new userTable();
@@ -72,6 +73,7 @@ namespace Cloud_Aissgnment_1.Controllers
         {
             List<productTable> products = productTable.ReturnProducts();
             ViewData["products"] = products;
+            ViewData["userID"]  = _httpContextAccessor.HttpContext.Session.GetInt32("UserID");
             //Duplicate
             return View();
         }

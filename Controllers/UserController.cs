@@ -7,6 +7,14 @@ namespace Cloud_Aissgnment_1.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<HomeController> _logger;
+
+        public UserController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
+        {
+            _logger = logger;
+            _httpContextAccessor = httpContextAccessor; // Initialize IHttpContextAccessor
+        }
 
         public userTable usrtbl = new userTable();
         public LoginModel lm = new LoginModel();
@@ -27,7 +35,7 @@ namespace Cloud_Aissgnment_1.Controllers
             if (UserID != -1)
             {
                 // Redirect After User Found
-                TempData["userID"] = UserID;
+                //TempData["userID"] = UserID;
                 HttpContext.Session.SetInt32("UserID", UserID);
                 return RedirectToAction("Account", "Home");
             }

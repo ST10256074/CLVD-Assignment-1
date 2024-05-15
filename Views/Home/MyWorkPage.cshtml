@@ -4,15 +4,7 @@
 @{
     ViewData["Title"] = "Products";
     var userID = -1;
-    if (TempData["userID"] != null)
-    {
-        userID = int.Parse(TempData["userID"].ToString());
-        TempData["userID"] = userID;
-    }
-    else
-    {
-        userID = -1;
-    }
+    userID = int.Parse( ViewData["userID"].ToString());
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
 }
 
