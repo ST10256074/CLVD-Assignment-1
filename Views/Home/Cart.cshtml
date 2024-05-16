@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
     int productID = -1;
     DateTime d = DateTime.Today;
@@ -6,6 +8,7 @@
     if (TempData["productID"]!=null)
     {
         productID = int.Parse(@TempData["productID"].ToString());
+        TempData["productID"] = productID;
     }
 
     
@@ -33,14 +36,18 @@
             <img src=item.picture />
             <p class="grid-item-text">R @item.Price</p>
         </div>
-        <form class="form" asp-controller="Transaction" asp-action="Buy" method="post">
-            @if (userID != null)
-            {
-                <input type="hidden" name="userID" value="@userID" />
-                <input type="hidden" name="productID" value="@productID" />
-                <input type="hidden" name="date" value="@d" />
-                <input type="submit" value="Buy">
-            }
-        </form>
+        if (@HttpContextAccessor.HttpContext.Session.GetInt32("UserID") != null)
+        {
+            <form class="form" asp-controller="Transaction" asp-action="Buy" method="post">
+                @if (userID != null)
+                {
+                    <input type="hidden" name="userID" value="@userID" />
+                    <input type="hidden" name="productID" value="@productID" />
+                    <input type="hidden" name="date" value="@d" />
+                    <input type="submit" value="Buy">
+                }
+            </form>
+        }
+
     }
 }

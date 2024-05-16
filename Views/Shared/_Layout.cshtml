@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,15 +33,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoginSignup">LoginSignup</a>
-                        </li>
+
                         <li class="nav-item ms-auto">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Account">Account</a>
-                        </li>
+                        @*Checks whether the user is signed in. If so display the account page otherwise the login and signup page*@
+                        @if (@HttpContextAccessor.HttpContext.Session.GetInt32("UserID") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoginSignup">LoginSignup</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Account">Account</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
