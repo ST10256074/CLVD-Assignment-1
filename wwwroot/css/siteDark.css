@@ -10,7 +10,7 @@
     --main-white-theme-color: white;
     --main-black-theme-color:#000000;
     /*Overwrite bg to black*/
-    /*--bs-body-bg:#000000;*/
+    --bs-body-bg:#000000;
 }
 
 html {
