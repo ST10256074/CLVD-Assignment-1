@@ -16,15 +16,17 @@
 <h1>MyWork</h1>
 
 <body>
-    <form class="form" asp-controller="Product" asp-action="AddProduct" method="post">
+    <form class="form" asp-controller="Product" asp-action="AddProduct" enctype="multipart/form-data" method="post">
         <h2>Insert new products</h2>
         <input type="hidden" name="ID" placeholder="ID" value="@userID">
         <input type="text" name="Name" placeholder="Name" required>
         <input type="number" name="Price" placeholder="Price" required>
         <input type="text" name="Category" placeholder="Category" required>
-        @*CHANGE no choice for availability as it should be inherintely true*@
+        <input type="file" id="fileLoader" name="ImageFile" placeholder="ImageFile" title="Load Image" accept="image/*" />
         <p>Availability</p>
         <input type="checkbox" name="Availability" placeholder="Availability" required>
         <input type="submit" value="Submit">
     </form>
+
+    
 </body>

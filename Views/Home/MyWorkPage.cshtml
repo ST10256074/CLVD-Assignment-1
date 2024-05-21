@@ -48,7 +48,8 @@
         {
             <div class="grid-item">
                 <p class="grid-item-text">@item.Name</p>
-                <img src=item.picture />
+                <img src=@item.pImage />
+                <img src=@item.ImageSrcString />
                 <p class="grid-item-text">R @item.Price</p>
                 <form asp-controller="Product" asp-action="Cart" method="post">
                     <input type="hidden" name="userID" value="@userID" />

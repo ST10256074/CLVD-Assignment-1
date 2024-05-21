@@ -14,6 +14,8 @@ namespace Cloud_Aissgnment_1.Controllers
         [HttpPost]
         public ActionResult AddProduct(productTable p)
         {
+            // Receive data from the form
+            var files = Request.Form.Files;
             var result = prdtbl.insertProduct(p);
             return RedirectToAction("MyWorkPage", "Home");
         }

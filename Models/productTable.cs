@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Drawing;
 
 namespace Cloud_Aissgnment_1.Models
 {
@@ -14,6 +15,13 @@ namespace Cloud_Aissgnment_1.Models
 
         public double Price { get; set; }
 
+        public Image pImage { get; set; }
+
+        // Receive Image from form
+        public IFormFile ImageFile { get; set; }
+
+        public string ImageSrcString { get; set; }
+
         public string Category { get; set; }
 
         public bool Availability { get; set; }
@@ -26,14 +34,31 @@ namespace Cloud_Aissgnment_1.Models
         {
             try
             {
-                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability, productOwnerID) " +
-                    "VALUES (@Name, @Price, @Category, @Availability, @ID)";
+                string sql = "INSERT INTO productTable (productName, productPrice, productCategory, productAvailability, productOwnerID, productImage) " +
+                    "VALUES (@Name, @Price, @Category, @Availability, @ID, @productImage)";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@Name", p.Name);
                 cmd.Parameters.AddWithValue("@Price", (double)p.Price);
                 cmd.Parameters.AddWithValue("@Category", p.Category);
                 cmd.Parameters.AddWithValue("@Availability", p.Availability);
                 cmd.Parameters.AddWithValue("@ID", p.ID);
+
+                // Convert HttpFormFile to Image plus null check
+                if (p.ImageFile != null)
+                {
+                    Image img = Image.FromStream(p.ImageFile.OpenReadStream());
+
+                    // Convert Image to Byte Array
+                    byte[] imgData = ConvertImageToBytes(img);
+
+
+                    cmd.Parameters.AddWithValue("@productImage", imgData);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@productImage", null);
+                }
+
                 con.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
                 con.Close();
@@ -52,7 +77,6 @@ namespace Cloud_Aissgnment_1.Models
         {
             string sql = "Select * from productTable;";
             SqlCommand cmd = new SqlCommand(sql, con);
-
             List<productTable> products = new List<productTable>();
 
 
@@ -64,18 +88,57 @@ namespace Cloud_Aissgnment_1.Models
                     int ID = reader.GetInt32(0);
                     string name = reader.GetString(1);
                     double price = reader.GetDouble(2);
+
+                    // Byte Conversion from database to image
+                    Image img = null;
+                    string imgsrcstring = "";
+                    //var imgData = reader.GetSqlBytes(6);
+                    byte[] b = new byte[2146435071];
+                    if (!reader.IsDBNull(6))
+                    {
+                        var numberofbytesread = reader.GetBytes(6, 0, b, 0, int.MaxValue);
+
+                        byte[] buffer = (byte[])b;
+
+                        //img = productTable.ConvertByteArrayToImage(buffer);
+                        string s = Convert.ToBase64String(buffer);
+                        imgsrcstring = String.Format("\"data:image/Bmp;base64,{0}\">", s);
+                    }
+
                     string category = reader.GetString(3);
                     bool availability = reader.GetBoolean(4);
                     int owner = reader.GetInt32(5);
 
-                    // ... (add more properties for all columns)
+                    // Product Table init
 
-                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price, OwnerID = owner });
+                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price, OwnerID = owner, pImage = img, ImageSrcString = imgsrcstring });
                 }
             }
 
             con.Close();
             return (products);
+        }
+
+        // Helper Methods for image conversion
+        public static byte[] ConvertImageToBytes(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                return ms.ToArray();
+            }
+        }
+
+        // Create image from byte array
+
+        public static Image ConvertByteArrayToImage(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                //var r = Image.FromStream(ms);
+                var r = Bitmap.FromStream(ms);
+                return r;
+            }
         }
 
 
