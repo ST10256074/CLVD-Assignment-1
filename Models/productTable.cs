@@ -15,11 +15,10 @@ namespace Cloud_Aissgnment_1.Models
 
         public double Price { get; set; }
 
-        public Image pImage { get; set; }
-
         // Receive Image from form
         public IFormFile ImageFile { get; set; }
 
+        // Send src string to <img> tag
         public string ImageSrcString { get; set; }
 
         public string Category { get; set; }
@@ -46,13 +45,18 @@ namespace Cloud_Aissgnment_1.Models
                 // Convert HttpFormFile to Image plus null check
                 if (p.ImageFile != null)
                 {
+                    // Take httpformfile and save it to the server and store the src string into the database using guid
+                    //save the image to the server
+
+                    //convert httpformfile to image
                     Image img = Image.FromStream(p.ImageFile.OpenReadStream());
+                    string imgsrcstring = "/img/" + Guid.NewGuid().ToString() + Path.GetExtension(p.ImageFile.FileName);
+                    string savestring = "wwwroot" + imgsrcstring;
 
-                    // Convert Image to Byte Array
-                    byte[] imgData = ConvertImageToBytes(img);
+                    img.Save(savestring);
 
+                    cmd.Parameters.AddWithValue("@productImage", imgsrcstring);
 
-                    cmd.Parameters.AddWithValue("@productImage", imgData);
                 }
                 else
                 {
@@ -88,30 +92,17 @@ namespace Cloud_Aissgnment_1.Models
                     int ID = reader.GetInt32(0);
                     string name = reader.GetString(1);
                     double price = reader.GetDouble(2);
+                    string imgsrcstring = null;
 
-                    // Byte Conversion from database to image
-                    Image img = null;
-                    string imgsrcstring = "";
-                    //var imgData = reader.GetSqlBytes(6);
-                    byte[] b = new byte[2146435071];
                     if (!reader.IsDBNull(6))
                     {
-                        var numberofbytesread = reader.GetBytes(6, 0, b, 0, int.MaxValue);
-
-                        byte[] buffer = (byte[])b;
-
-                        //img = productTable.ConvertByteArrayToImage(buffer);
-                        string s = Convert.ToBase64String(buffer);
-                        imgsrcstring = String.Format("\"data:image/Bmp;base64,{0}\">", s);
+                        imgsrcstring = reader.GetString(6);
                     }
-
                     string category = reader.GetString(3);
                     bool availability = reader.GetBoolean(4);
                     int owner = reader.GetInt32(5);
 
-                    // Product Table init
-
-                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price, OwnerID = owner, pImage = img, ImageSrcString = imgsrcstring });
+                    products.Add(new productTable { ID = ID, Name = name, Availability = availability, Category = category, Price = price, OwnerID = owner, ImageSrcString = imgsrcstring });
                 }
             }
 
@@ -119,27 +110,7 @@ namespace Cloud_Aissgnment_1.Models
             return (products);
         }
 
-        // Helper Methods for image conversion
-        public static byte[] ConvertImageToBytes(Image img)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-                return ms.ToArray();
-            }
-        }
 
-        // Create image from byte array
-
-        public static Image ConvertByteArrayToImage(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                //var r = Image.FromStream(ms);
-                var r = Bitmap.FromStream(ms);
-                return r;
-            }
-        }
 
 
     }
