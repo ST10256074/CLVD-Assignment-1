@@ -10,7 +10,14 @@ namespace Cloud_Aissgnment_1.Controllers
         public ActionResult Buy(TransactionTable t2)
         {
             t.buyProduct(t2);
+            TempData["productID"] = null;
             return RedirectToAction("MyWorkPage", "Home");
+        }
+        [HttpPost]
+        public ActionResult ClearCart()
+        {
+            TempData["productID"] = null;
+            return RedirectToAction("Cart", "Home");
         }
     }
 }

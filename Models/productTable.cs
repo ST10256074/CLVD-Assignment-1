@@ -39,7 +39,8 @@ namespace Cloud_Aissgnment_1.Models
                 cmd.Parameters.AddWithValue("@Name", p.Name);
                 cmd.Parameters.AddWithValue("@Price", (double)p.Price);
                 cmd.Parameters.AddWithValue("@Category", p.Category);
-                cmd.Parameters.AddWithValue("@Availability", p.Availability);
+                //FIXME
+                cmd.Parameters.AddWithValue("@Availability", true);
                 cmd.Parameters.AddWithValue("@ID", p.ID);
 
                 // Convert HttpFormFile to Image plus null check

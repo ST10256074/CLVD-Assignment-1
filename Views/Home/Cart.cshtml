@@ -5,13 +5,13 @@
     int productID = -1;
     DateTime d = DateTime.Today;
 
-    if (TempData["productID"]!=null)
+    if (TempData["productID"] != null)
     {
         productID = int.Parse(@TempData["productID"].ToString());
         TempData["productID"] = productID;
     }
 
-    
+
 
     var userID = -1;
     if (TempData["userID"] != null)
@@ -26,14 +26,15 @@
 }
 
 <h2>Ordered Product</h2>
-
+<p> </p>
+<p> </p>
 @foreach (var item in products)
 {
     if (item.ID == productID)
     {
         <div class="grid-item">
             <p class="grid-item-text">@item.Name</p>
-            <img src=item.picture />
+            <img class="center img-block" src=@item.ImageSrcString />
             <p class="grid-item-text">R @item.Price</p>
         </div>
         if (@HttpContextAccessor.HttpContext.Session.GetInt32("UserID") != null)
@@ -50,4 +51,17 @@
         }
 
     }
+
+}
+@if (TempData["productID"] == null)
+{
+    <p>Nothing to see here ...</p>
+}
+else
+{
+
+    <p></p>
+    <form class="form" asp-controller="Transaction" asp-action="ClearCart" method="post">
+        <input type="submit" value="Clear Cart" />
+    </form>
 }

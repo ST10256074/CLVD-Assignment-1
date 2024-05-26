@@ -8,7 +8,7 @@
     --main-accent-color: #F77F00;
     --main-light-accent-color: #FCBF49;
     --main-white-theme-color: white;
-    --main-black-theme-color:#000000;
+    --main-black-theme-color: #000000;
     /*Overwrite bg to black*/
     /*--bs-body-bg:#000000;*/
 }
@@ -98,27 +98,50 @@ body {
 
 .grid-container {
     display: grid;
+    padding-top: 20px;
     grid-row-gap: 30px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.1fr));
+    grid-column-gap: 80px;
     column-count: 3;
-    column-width: 80px;
+    column-width: 120px;
 }
 
 .grid-item {
+    width: 250px;
+    margin-top: -20px;
     padding: 10px 10px 10px 10px;
     background-color: #EAE2B7;
     border: 5px solid var(--main-light-accent-color);
     border-radius: 15px;
+    max-width: 300px;
+    max-height: 350px;
+    text-align: center;
+}
+
+.input {
+    background-color: #EAE2B7;
+}
+
+.product_button {
+    background-color: transparent;
+    border: 0px;
+    width: 100%;
+    height: 100%;
 }
 
 .grid-item-text {
     text-align: center;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 
 .center-block {
     margin: 10px 100px 10px 100px;
+}
+
+.product-center-block {
+    margin: 10px 20px 10px 20px;
 }
 
 .crop {
@@ -146,8 +169,11 @@ li {
 }
 
 .img-block {
-    width: 200px;
+    width: auto;
     height: auto;
+    max-height: 200px;
+    margin-top: 4px;
+    max-width: 200px;
 }
 
 .form-container {
@@ -171,8 +197,8 @@ li {
     }
 
     .form input[type="text"],
-    .form input[type="password"], 
-    .form input[type="checkbox"], 
+    .form input[type="password"],
+    .form input[type="checkbox"],
     .form input[type="number"] {
         width: 100%;
         padding: 10px;
@@ -191,5 +217,4 @@ li {
     }
 
 .account-details {
-
 }

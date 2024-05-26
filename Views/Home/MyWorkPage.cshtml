@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Products";
     var userID = -1;
-    if (ViewData["userID"] !=null)
+    if (ViewData["userID"] != null)
     {
         userID = int.Parse(ViewData["userID"].ToString());
 
@@ -12,7 +12,7 @@
     var products = ViewData["Products"] as List<Cloud_Aissgnment_1.Models.productTable>;
 }
 
-<div class="center-block">
+<div class="product-center-block">
     <h1>Products </h1>
     @if (userID != -1)
     {
@@ -22,41 +22,23 @@
     }
 
 
-    <div class="item-grid"></div>
-
     <div class="grid-container">
-        <div class="grid-item">
-            <p class="grid-item-text">Bolgatanga Baskets</p>
-            @*https://www.babycouture.co.za/products/easter-grass-baskets*@
-            <img src="~/img/Earth_red_handle_1024x1024_2x_de0f90a2-0bc7-40dd-82d2-f68bc0378d3d_1024x1024@2x.webp" alt="Bolgatanga Baskets" class="center img-block" />
-            <p class="grid-item-text">R1500</p>
-        </div>
-        <div class="grid-item">
-            <p class="grid-item-text">Ebony Wood Sculptures</p>
-            @*https://www.effetto.com/item/f5aa4a2f-african-woman-bust-hand-carved-ebony-wooden-sculpture*@
-            <img src="~/img/carved-ebony-sculpture.jpg" alt="Wood Sculpture" class="center img-block" />
-            <p class="grid-item-text">R3000</p>
-        </div>
-        <div class="grid-item">
-            <p class="grid-item-text">Beaded Decorations</p>
-            @*https://www.janiecrow.com/beaded-decorations.html*@
-            <img src="~/img/beaded-decorations.jpeg" alt="Beaded Decorations" class="center img-block" />
-            <p class="grid-item-text">R250</p>
-        </div>
-
         @foreach (var item in products)
         {
-            <div class="grid-item">
-                <p class="grid-item-text">@item.Name</p>
-                <img class="center img-block" src=@item.ImageSrcString />
-                <p class="grid-item-text">R @item.Price</p>
-                <form asp-controller="Product" asp-action="Cart" method="post">
+            <form asp-controller="Product" asp-action="Cart" method="post" class="grid-item">
+
+                <button class="product_button">
+                    <p class="grid-item-text">@item.Name</p>
+                    <img class="center img-block" src=@item.ImageSrcString />
+                    <p class="grid-item-text">R @item.Price</p>
+                    <p class="grid-item-text">Category: @item.Category</p>
+                    <p class="grid-item-text">Instock: @item.Availability</p>
                     <input type="hidden" name="userID" value="@userID" />
                     <input type="hidden" name="productID" value="@item.ID" />
-                    <input type="submit" value="Buy" />
-                </form>
-            </div>
-        }
+                    @* <input type="submit" value="Buy" /> *@
+                </button>
+            </form>
 
+        }
     </div>
 </div>
