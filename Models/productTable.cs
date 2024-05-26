@@ -61,7 +61,7 @@ namespace Cloud_Aissgnment_1.Models
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@productImage", null);
+                    cmd.Parameters.AddWithValue("@productImage", "");
                 }
 
                 con.Open();
